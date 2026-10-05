@@ -1,0 +1,92 @@
+PREFIX :    <http://fhnw.ch/fraud#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+# ============================================================
+# Abfragen für Aufgabe 4d (SWRL / Protégé)
+# Ohne A- und B-Transaktionen (gemäss Aufgabenstellung).
+#
+# Wichtig: Die SWRL-Basisrisiko-Regel erzeugt nur dann einen
+# hatRisikowert, wenn auch eine Restriktion vorliegt. Bei
+# Transaktionen ohne Restriktion entsteht KEIN hatRisikowert.
+# Eine Abfrage allein über hatRisikowert würde diese
+# Transaktionen daher übersehen.
+#
+# Deshalb berechnen die Queries das Basisrisiko direkt aus den
+# Teilrisiken (hatRisikoInhaber + hatRisikoHändler +
+# hatRisikoBetrag + optional hatRisikoRestriktion) und
+# kombinieren es über MAX mit einem evtl. vorhandenen
+# hatRisikowert (z. B. dem Wert 150 aus der Zeitdifferenzregel).
+# ============================================================
+
+
+# ------------------------------------------------------------
+# Query 1: Massgeblicher Risikowert je Transaktion
+# Erwartet:
+#   transaktion_sutter_suedafrika  180
+#   transaktion_mueller_marokko     90
+#   transaktion_sutter_marokko     150
+#   transaktion_mueller_internet    90
+# ------------------------------------------------------------
+SELECT ?transaktion (MAX(?wert) AS ?risiko)
+WHERE {
+    ?transaktion rdf:type :Transaktion ;
+                 :hatRisikoInhaber ?ri ;
+                 :hatRisikoHändler ?rh ;
+                 :hatRisikoBetrag  ?rb .
+    OPTIONAL { ?transaktion :hatRisikoRestriktion ?rr . }
+    OPTIONAL { ?transaktion :hatRisikowert ?rw . }
+    BIND(?ri + ?rh + ?rb + COALESCE(?rr, 0) AS ?basis)
+    BIND(IF(BOUND(?rw) && ?rw > ?basis, ?rw, ?basis) AS ?wert)
+}
+GROUP BY ?transaktion
+ORDER BY ?transaktion
+
+
+# ------------------------------------------------------------
+# Query 2: Massgeblicher Risikowert und daraus abgeleitete
+# Entscheidung. Zuerst wird (wie in Query 1) der höchste
+# Risikowert bestimmt, danach die Entscheidung über die
+# Schwellenwerte (< 100 akzeptiert, 100–149 gestoppt,
+# >= 150 abgelehnt) in SPARQL abgeleitet.
+# ------------------------------------------------------------
+SELECT ?transaktion ?risiko ?entscheidung
+WHERE {
+    {
+        SELECT ?transaktion (MAX(?wert) AS ?risiko)
+        WHERE {
+            ?transaktion rdf:type :Transaktion ;
+                         :hatRisikoInhaber ?ri ;
+                         :hatRisikoHändler ?rh ;
+                         :hatRisikoBetrag  ?rb .
+            OPTIONAL { ?transaktion :hatRisikoRestriktion ?rr . }
+            OPTIONAL { ?transaktion :hatRisikowert ?rw . }
+            BIND(?ri + ?rh + ?rb + COALESCE(?rr, 0) AS ?basis)
+            BIND(IF(BOUND(?rw) && ?rw > ?basis, ?rw, ?basis) AS ?wert)
+        }
+        GROUP BY ?transaktion
+    }
+
+    BIND(
+        IF(?risiko < 100,
+           :entscheidung_akzeptiert,
+           IF(?risiko < 150,
+              :entscheidung_gestoppt,
+              :entscheidung_abgelehnt
+           )
+        ) AS ?entscheidung
+    )
+}
+ORDER BY ?transaktion
+
+
+# ------------------------------------------------------------
+# Query 3: Kontrolle der Händler-Karteninhaber-Restriktion
+# Zeigt, bei welchen Transaktionen der Zusatzwert 30 gesetzt
+# wurde.
+# Erwartet: transaktion_sutter_suedafrika
+# ------------------------------------------------------------
+SELECT ?transaktion ?restriktion
+WHERE {
+    ?transaktion :hatRisikoRestriktion ?restriktion .
+}
+ORDER BY ?transaktion

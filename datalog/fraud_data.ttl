@@ -1,0 +1,107 @@
+@prefix :    <http://fhnw.ch/fraud#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================
+# Klassen-Hierarchie
+# A-Transaktion ist eine spezialisierte Transaktion.
+# ============================================================
+:A_Transaktion rdfs:subClassOf :Transaktion .
+
+# ============================================================
+# Dienstleistungsarten
+# ============================================================
+:physischer_shop a :Dienstleistungsart .
+:internet_shop   a :Dienstleistungsart .
+
+# ============================================================
+# Länder und Regionen
+# ============================================================
+:schweiz     a :Land ; :gehörtZuRegion :region_schweiz .
+:deutschland a :Land ; :gehörtZuRegion :region_europa .
+:suedafrika  a :Land ; :gehörtZuRegion :region_afrika .
+:marokko     a :Land ; :gehörtZuRegion :region_afrika .
+
+:region_schweiz a :Region .
+:region_europa  a :Region .
+:region_afrika  a :Region .
+
+# ============================================================
+# Karteninhaber
+# ============================================================
+:sutter  a :Karteninhaber ;
+         :hatName "Herr Sutter" ;
+         :ansässigIn :schweiz .
+
+:mueller a :Karteninhaber ;
+         :hatName "Herr Mueller" ;
+         :ansässigIn :deutschland .
+
+# ============================================================
+# Kreditkarten
+# Eine Karte gehört zu einem Karteninhaber.
+# ============================================================
+:karte_sutter  a :Kreditkarte ;
+               :hatKartenID "karte_sutter" ;
+               :gehörtZuKarteninhaber :sutter .
+
+:karte_mueller a :Kreditkarte ;
+               :hatKartenID "karte_mueller" ;
+               :gehörtZuKarteninhaber :mueller .
+
+# ============================================================
+# Händler
+# ============================================================
+:world_of_africa             a :Händler ;
+                             :hatName "World of Africa" ;
+                             :befindlichIn :suedafrika ;
+                             :hatDienstleistungsart :physischer_shop .
+
+:winds_of_deserts            a :Händler ;
+                             :hatName "Winds of Deserts" ;
+                             :befindlichIn :marokko ;
+                             :hatDienstleistungsart :physischer_shop .
+
+:south_african_master_pieces a :Händler ;
+                             :hatName "South African Master Pieces" ;
+                             :befindlichIn :suedafrika ;
+                             :hatDienstleistungsart :internet_shop .
+
+# ============================================================
+# Transaktionsentscheidungen (Instanzen)
+# ============================================================
+:entscheidung_akzeptiert a :Transaktionsentscheidung .
+:entscheidung_gestoppt   a :Transaktionsentscheidung .
+:entscheidung_abgelehnt  a :Transaktionsentscheidung .
+
+# ============================================================
+# Transaktionen
+# Eine Transaktion referenziert die KREDITKARTE (nicht direkt
+# den Karteninhaber). Der Karteninhaber ergibt sich über die
+# Property :gehörtZuKarteninhaber der Kreditkarte.
+# ============================================================
+:transaktion_sutter_suedafrika a :Transaktion ;
+    :verwendetKreditkarte :karte_sutter ;
+    :hatHändler           :world_of_africa ;
+    :hatBetrag            11234 ;
+    :hatZeitstempel       1000 .
+
+:transaktion_mueller_marokko a :Transaktion ;
+    :verwendetKreditkarte :karte_mueller ;
+    :hatHändler           :winds_of_deserts ;
+    :hatBetrag            12 ;
+    :hatZeitstempel       1500 .
+
+:transaktion_sutter_marokko a :Transaktion ;
+    :verwendetKreditkarte    :karte_sutter ;
+    :hatHändler              :winds_of_deserts ;
+    :hatBetrag               500 ;
+    :hatZeitstempel          1180 ;
+    :hatVorherigeTransaktion :transaktion_sutter_suedafrika .
+
+:transaktion_mueller_internet a :Transaktion ;
+    :verwendetKreditkarte :karte_mueller ;
+    :hatHändler           :south_african_master_pieces ;
+    :hatBetrag            102 ;
+    :hatZeitstempel       2000 .

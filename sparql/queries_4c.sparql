@@ -1,0 +1,82 @@
+PREFIX :    <http://fhnw.ch/fraud#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+# ============================================================
+# Abfragen für Aufgabe 4c (RDFox / Datalog)
+# Die Risikowerte, Entscheidungen und A-Transaktionen werden
+# durch die Datalog-Regeln materialisiert und hier ausgelesen.
+#
+# Hinweis: Die Datalog-Regeln bilden das Gesamtrisiko bereits
+# über das Maximum (Basisrisiko vs. Zeitrisiko). Zur Sicherheit
+# wird in den Ausgabe-Queries zusätzlich MAX(?r) verwendet,
+# damit pro Transaktion garantiert nur der massgebliche
+# (höchste) Risikowert erscheint.
+# ============================================================
+
+
+# ------------------------------------------------------------
+# Query 1: Massgeblicher Risikowert je Transaktion
+# Erwartet:
+#   transaktion_sutter_suedafrika  180
+#   transaktion_mueller_marokko     90
+#   transaktion_sutter_marokko     150
+#   transaktion_mueller_internet    90
+# ------------------------------------------------------------
+SELECT ?transaktion (MAX(?r) AS ?risiko)
+WHERE {
+    ?transaktion rdf:type :Transaktion ;
+                 :hatRisikowert ?r .
+}
+GROUP BY ?transaktion
+ORDER BY ?transaktion
+
+
+# ------------------------------------------------------------
+# Query 2: Risikowert und zugehörige Entscheidung
+# (Die Entscheidung wird durch die Datalog-Regeln gesetzt.)
+# ------------------------------------------------------------
+SELECT ?transaktion (MAX(?r) AS ?risiko) ?entscheidung
+WHERE {
+    ?transaktion rdf:type :Transaktion ;
+                 :hatRisikowert ?r ;
+                 :hatEntscheidung ?entscheidung .
+}
+GROUP BY ?transaktion ?entscheidung
+ORDER BY ?transaktion
+
+
+# ------------------------------------------------------------
+# Query 3: Aufschlüsselung der Teilrisiken (zur Nachvollziehbarkeit)
+# ------------------------------------------------------------
+SELECT ?transaktion ?inhaber ?händler ?betrag ?restriktion ?basis
+WHERE {
+    ?transaktion rdf:type :Transaktion ;
+                 :hatRisikoInhaber ?inhaber ;
+                 :hatRisikoHändler ?händler ;
+                 :hatRisikoBetrag  ?betrag ;
+                 :hatBasisrisiko   ?basis .
+    OPTIONAL { ?transaktion :hatRisikoRestriktion ?restriktion . }
+}
+ORDER BY ?transaktion
+
+
+# ------------------------------------------------------------
+# Query 4: Alle sicher erkannten A-Transaktionen
+# Erwartet: transaktion_mueller_internet
+# ------------------------------------------------------------
+SELECT ?transaktion
+WHERE {
+    ?transaktion rdf:type :A_Transaktion .
+}
+ORDER BY ?transaktion
+
+# ------------------------------------------------------------
+# Query 5: Transaktionen, bei denen die Händler-Karteninhaber-
+# Restriktion gegriffen hat (+30)
+# Erwartet: transaktion_sutter_suedafrika
+# ------------------------------------------------------------
+SELECT ?transaktion ?restriktion
+WHERE {
+    ?transaktion :hatRisikoRestriktion ?restriktion .
+}
+ORDER BY ?transaktion

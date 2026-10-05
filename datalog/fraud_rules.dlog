@@ -1,0 +1,187 @@
+@prefix :    <http://fhnw.ch/fraud#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+# ============================================================
+# Datalog-Regeln für die Fraud-Detektion (Aufgabe 4c)
+#
+# Struktur: Eine Transaktion referenziert über
+# :verwendetKreditkarte die Kreditkarte. Der Karteninhaber
+# ergibt sich über :gehörtZuKarteninhaber.
+#
+# Hinweis zu RDFox: RDFox ist zunächst nur ein Triplestore,
+# der die eingegebenen Tripel speichert und über die Regeln
+# zusätzliche Tripel materialisiert. Die für die B-Transaktion
+# nötige Closed-World-Semantik entsteht erst durch die
+# Negation-as-Failure in den Regeln.
+# ============================================================
+
+
+# ============================================================
+# 1) Region-Propagation
+# Die Zwischenregeln lösen die Ketten nur an einer Stelle auf
+# und propagieren das Ergebnis direkt an die Transaktion.
+# Das macht die nachfolgenden Risiko-Regeln lesbarer.
+# ============================================================
+
+# Region des Karteninhabers (über die Kreditkarte aufgelöst)
+[?t, :hatRegionKarteninhaber, ?r] :-
+    [?t, :verwendetKreditkarte, ?karte],
+    [?karte, :gehörtZuKarteninhaber, ?k],
+    [?k, :ansässigIn, ?l],
+    [?l, :gehörtZuRegion, ?r] .
+
+# Region des Händlers
+[?t, :hatRegionHändler, ?r] :-
+    [?t, :hatHändler, ?h],
+    [?h, :befindlichIn, ?l],
+    [?l, :gehörtZuRegion, ?r] .
+
+
+# ============================================================
+# 2) Teilrisiken
+# ============================================================
+
+# Karteninhaber-Region-Risiko
+[?t, :hatRisikoInhaber, 0]  :- [?t, :hatRegionKarteninhaber, :region_schweiz] .
+[?t, :hatRisikoInhaber, 20] :- [?t, :hatRegionKarteninhaber, :region_europa] .
+[?t, :hatRisikoInhaber, 10] :- [?t, :hatRegionKarteninhaber, :region_afrika] .
+
+# Händler-Region-Risiko
+[?t, :hatRisikoHändler, 10] :- [?t, :hatRegionHändler, :region_schweiz] .
+[?t, :hatRisikoHändler, 20] :- [?t, :hatRegionHändler, :region_europa] .
+[?t, :hatRisikoHändler, 60] :- [?t, :hatRegionHändler, :region_afrika] .
+
+# Betragsrisiko
+[?t, :hatRisikoBetrag, 10] :- [?t, :hatBetrag, ?b], FILTER(?b < 1000) .
+[?t, :hatRisikoBetrag, 60] :- [?t, :hatBetrag, ?b], FILTER(?b >= 1000), FILTER(?b < 10000) .
+[?t, :hatRisikoBetrag, 90] :- [?t, :hatBetrag, ?b], FILTER(?b >= 10000) .
+
+
+# ============================================================
+# 3) Händler-Karteninhaber-Restriktion (neue Regel aus Aufgabe 4)
+# Schweizer Karteninhaber zahlt bei einem Händler in Südafrika
+# -> zusätzliches Risiko von 30 Punkten (additiv).
+# Der Standardfall wird explizit auf 0 gesetzt, damit jede
+# Transaktion einen Restriktionswert besitzt und die
+# Basisrisiko-Regel ohne Negation auskommt.
+# ============================================================
+# Spezialfall: Schweizer Karteninhaber zahlt bei Händler in Südafrika -> +30
+[?t, :hatRisikoRestriktion, 30] :-
+    [?t, :verwendetKreditkarte, ?karte],
+    [?karte, :gehörtZuKarteninhaber, ?k],
+    [?k, :ansässigIn, :schweiz],
+    [?t, :hatHändler, ?h],
+    [?h, :befindlichIn, :suedafrika] .
+
+
+
+# ============================================================
+# 4) Basisrisiko = Summe der additiven Teilrisiken
+# Zwei Varianten: mit und ohne Restriktionsbeitrag.
+# ============================================================
+
+# Basisrisiko OHNE Restriktion (drei Standard-Teilrisiken).
+# Die Restriktion wird erst im Gesamtrisiko separat addiert,
+# damit kein Standardwert-Selbstbezug noetig ist.
+[?t, :hatBasisrisiko, ?summe] :-
+    [?t, :hatRisikoInhaber, ?ri],
+    [?t, :hatRisikoHändler, ?rh],
+    [?t, :hatRisikoBetrag, ?rb],
+    BIND(?ri + ?rh + ?rb AS ?summe) .
+
+
+# ============================================================
+# 5) Zeitdifferenzregel
+# Greift über die explizit modellierte Vorgänger-Beziehung
+# :hatVorherigeTransaktion. Dieselbe Kreditkarte, zwei
+# verschiedene Händlerländer, jeweils physischer Shop,
+# Zeitdifferenz <= 300 Sekunden -> Mindestrisiko 150.
+# ============================================================
+[?t1, :hatRisikoZeit, 150] :-
+    [?t1, :hatVorherigeTransaktion, ?t2],
+    [?t1, :verwendetKreditkarte, ?karte],
+    [?t2, :verwendetKreditkarte, ?karte],
+    [?t1, :hatHändler, ?h1], [?h1, :hatDienstleistungsart, :physischer_shop],
+    [?h1, :befindlichIn, ?l1],
+    [?t2, :hatHändler, ?h2], [?h2, :hatDienstleistungsart, :physischer_shop],
+    [?h2, :befindlichIn, ?l2],
+    FILTER(?l1 != ?l2),
+    [?t1, :hatZeitstempel, ?z1], [?t2, :hatZeitstempel, ?z2],
+    FILTER(ABS(?z1 - ?z2) <= 300) .
+
+
+
+
+# ============================================================
+# 6) Gesamtrisiko = max( Basisrisiko(+Restriktion), Zeitrisiko )
+# Es werden alle vier Kombinationen direkt abgedeckt. NOT wird
+# nur auf FREMDE Praedikate angewandt (kein Selbstbezug), daher
+# stratifizierbar.
+# ============================================================
+
+# (a) ohne Restriktion, ohne Zeitrisiko -> Basisrisiko
+[?t, :hatRisikowert, ?basis] :-
+    [?t, :hatBasisrisiko, ?basis],
+    NOT [?t, :hatRisikoRestriktion, 30],
+    NOT [?t, :hatRisikoZeit, 150] .
+
+# (b) mit Restriktion, ohne Zeitrisiko -> Basisrisiko + 30
+[?t, :hatRisikowert, ?summe] :-
+    [?t, :hatBasisrisiko, ?basis],
+    [?t, :hatRisikoRestriktion, 30],
+    NOT [?t, :hatRisikoZeit, 150],
+    BIND(?basis + 30 AS ?summe) .
+
+# (c) mit Zeitrisiko, OHNE Restriktion -> max(Basis, 150)
+[?t, :hatRisikowert, 150] :-
+    [?t, :hatBasisrisiko, ?basis],
+    [?t, :hatRisikoZeit, 150],
+    NOT [?t, :hatRisikoRestriktion, 30],
+    FILTER(?basis <= 150) .
+
+[?t, :hatRisikowert, ?basis] :-
+    [?t, :hatBasisrisiko, ?basis],
+    [?t, :hatRisikoZeit, 150],
+    NOT [?t, :hatRisikoRestriktion, 30],
+    FILTER(?basis > 150) .
+
+# (d) mit Zeitrisiko UND Restriktion -> max(Basis+30, 150)
+[?t, :hatRisikowert, 150] :-
+    [?t, :hatBasisrisiko, ?basis],
+    [?t, :hatRisikoZeit, 150],
+    [?t, :hatRisikoRestriktion, 30],
+    BIND(?basis + 30 AS ?summe),
+    FILTER(?summe <= 150) .
+
+[?t, :hatRisikowert, ?summe] :-
+    [?t, :hatBasisrisiko, ?basis],
+    [?t, :hatRisikoZeit, 150],
+    [?t, :hatRisikoRestriktion, 30],
+    BIND(?basis + 30 AS ?summe),
+    FILTER(?summe > 150) .
+
+# ============================================================
+# 7) Transaktionsentscheidung
+# ============================================================
+[?t, :hatEntscheidung, :entscheidung_akzeptiert] :-
+    [?t, :hatRisikowert, ?r], FILTER(?r < 100) .
+
+[?t, :hatEntscheidung, :entscheidung_gestoppt] :-
+    [?t, :hatRisikowert, ?r], FILTER(?r >= 100), FILTER(?r < 150) .
+
+[?t, :hatEntscheidung, :entscheidung_abgelehnt] :-
+    [?t, :hatRisikowert, ?r], FILTER(?r >= 150) .
+
+
+# ============================================================
+# 8) A-Transaktion
+# Sicher ableitbar: Händler ist ein Internet-Shop.
+# B-Transaktion wird NICHT abgeleitet, da weitere A-Regeln
+# existieren können, die hier nicht bekannt sind. Aus
+# "kein Internet-Shop" darf nicht geschlossen werden, dass
+# eine Transaktion sicher keine A-Transaktion ist.
+# ============================================================
+[?t, rdf:type, :A_Transaktion] :-
+    [?t, :hatHändler, ?h],
+    [?h, :hatDienstleistungsart, :internet_shop] .
+

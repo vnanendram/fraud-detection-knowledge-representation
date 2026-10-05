@@ -1,0 +1,2026 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://fhnw.ch/fraud#"
+     xml:base="http://fhnw.ch/fraud"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#">
+    <owl:Ontology rdf:about="http://fhnw.ch/fraud">
+        <rdfs:comment>Fraud-Detektion: Ontologie mit Kreditkartenstruktur und Händler-Karteninhaber-Restriktion (Aufgabe 4d, ohne A-/B-Transaktion in SWRL).</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled -->
+
+    <owl:AnnotationProperty rdf:about="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fhnw.ch/fraud#ansässigIn -->
+
+    <owl:ObjectProperty rdf:about="http://fhnw.ch/fraud#ansässigIn">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Karteninhaber"/>
+        <rdfs:range rdf:resource="http://fhnw.ch/fraud#Land"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#befindlichIn -->
+
+    <owl:ObjectProperty rdf:about="http://fhnw.ch/fraud#befindlichIn">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Händler"/>
+        <rdfs:range rdf:resource="http://fhnw.ch/fraud#Land"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#gehörtZuKarteninhaber -->
+
+    <owl:ObjectProperty rdf:about="http://fhnw.ch/fraud#gehörtZuKarteninhaber">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Kreditkarte"/>
+        <rdfs:range rdf:resource="http://fhnw.ch/fraud#Karteninhaber"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#gehörtZuRegion -->
+
+    <owl:ObjectProperty rdf:about="http://fhnw.ch/fraud#gehörtZuRegion">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Land"/>
+        <rdfs:range rdf:resource="http://fhnw.ch/fraud#Region"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatDienstleistungsart -->
+
+    <owl:ObjectProperty rdf:about="http://fhnw.ch/fraud#hatDienstleistungsart">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Händler"/>
+        <rdfs:range rdf:resource="http://fhnw.ch/fraud#Dienstleistungsart"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatEntscheidung -->
+
+    <owl:ObjectProperty rdf:about="http://fhnw.ch/fraud#hatEntscheidung">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://fhnw.ch/fraud#Transaktionsentscheidung"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatHändler -->
+
+    <owl:ObjectProperty rdf:about="http://fhnw.ch/fraud#hatHändler">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://fhnw.ch/fraud#Händler"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatRegionHändler -->
+
+    <owl:ObjectProperty rdf:about="http://fhnw.ch/fraud#hatRegionHändler">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://fhnw.ch/fraud#Region"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatRegionKarteninhaber -->
+
+    <owl:ObjectProperty rdf:about="http://fhnw.ch/fraud#hatRegionKarteninhaber">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://fhnw.ch/fraud#Region"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatVorherigeTransaktion -->
+
+    <owl:ObjectProperty rdf:about="http://fhnw.ch/fraud#hatVorherigeTransaktion">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#verwendetKreditkarte -->
+
+    <owl:ObjectProperty rdf:about="http://fhnw.ch/fraud#verwendetKreditkarte">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://fhnw.ch/fraud#Kreditkarte"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatBasisrisiko -->
+
+    <owl:DatatypeProperty rdf:about="http://fhnw.ch/fraud#hatBasisrisiko">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatBetrag -->
+
+    <owl:DatatypeProperty rdf:about="http://fhnw.ch/fraud#hatBetrag">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatKartenID -->
+
+    <owl:DatatypeProperty rdf:about="http://fhnw.ch/fraud#hatKartenID">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Kreditkarte"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatName -->
+
+    <owl:DatatypeProperty rdf:about="http://fhnw.ch/fraud#hatName">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatRisikoBetrag -->
+
+    <owl:DatatypeProperty rdf:about="http://fhnw.ch/fraud#hatRisikoBetrag">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatRisikoHändler -->
+
+    <owl:DatatypeProperty rdf:about="http://fhnw.ch/fraud#hatRisikoHändler">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatRisikoInhaber -->
+
+    <owl:DatatypeProperty rdf:about="http://fhnw.ch/fraud#hatRisikoInhaber">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatRisikoRestriktion -->
+
+    <owl:DatatypeProperty rdf:about="http://fhnw.ch/fraud#hatRisikoRestriktion">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatRisikoZeit -->
+
+    <owl:DatatypeProperty rdf:about="http://fhnw.ch/fraud#hatRisikoZeit">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatRisikowert -->
+
+    <owl:DatatypeProperty rdf:about="http://fhnw.ch/fraud#hatRisikowert">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fhnw.ch/fraud#hatZeitstempel -->
+
+    <owl:DatatypeProperty rdf:about="http://fhnw.ch/fraud#hatZeitstempel">
+        <rdfs:domain rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fhnw.ch/fraud#A_Transaktion -->
+
+    <owl:Class rdf:about="http://fhnw.ch/fraud#A_Transaktion">
+        <rdfs:subClassOf rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <rdfs:comment>Spezialisierte Transaktion, die sicher als A klassifiziert wurde.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fhnw.ch/fraud#Dienstleistungsart -->
+
+    <owl:Class rdf:about="http://fhnw.ch/fraud#Dienstleistungsart">
+        <rdfs:comment>Art des Händlers, z. B. Internet-Shop oder Physischer-Shop.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fhnw.ch/fraud#Händler -->
+
+    <owl:Class rdf:about="http://fhnw.ch/fraud#Händler">
+        <rdfs:comment>Unternehmen oder Person, welche die Zahlung empfängt.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fhnw.ch/fraud#Karteninhaber -->
+
+    <owl:Class rdf:about="http://fhnw.ch/fraud#Karteninhaber">
+        <rdfs:comment>Person, welcher eine oder mehrere Kreditkarten gehören.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fhnw.ch/fraud#Kreditkarte -->
+
+    <owl:Class rdf:about="http://fhnw.ch/fraud#Kreditkarte">
+        <rdfs:comment>Zahlungsmittel, das einem Karteninhaber gehört.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fhnw.ch/fraud#Land -->
+
+    <owl:Class rdf:about="http://fhnw.ch/fraud#Land">
+        <rdfs:comment>Geografisches Land.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fhnw.ch/fraud#Region -->
+
+    <owl:Class rdf:about="http://fhnw.ch/fraud#Region">
+        <rdfs:comment>Vereinfachte geografische Kategorie: Schweiz, Europa, Afrika.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fhnw.ch/fraud#Transaktion -->
+
+    <owl:Class rdf:about="http://fhnw.ch/fraud#Transaktion">
+        <rdfs:comment>Eine konkrete Kreditkartenzahlung.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fhnw.ch/fraud#Transaktionsentscheidung -->
+
+    <owl:Class rdf:about="http://fhnw.ch/fraud#Transaktionsentscheidung">
+        <rdfs:comment>Ergebnis der Risikobewertung: Akzeptiert, Gestoppt, Abgelehnt.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fhnw.ch/fraud#deutschland -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#deutschland">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Land"/>
+        <gehörtZuRegion rdf:resource="http://fhnw.ch/fraud#region_europa"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#entscheidung_abgelehnt -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#entscheidung_abgelehnt">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Transaktionsentscheidung"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#entscheidung_akzeptiert -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#entscheidung_akzeptiert">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Transaktionsentscheidung"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#entscheidung_gestoppt -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#entscheidung_gestoppt">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Transaktionsentscheidung"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#internet_shop -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#internet_shop">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Dienstleistungsart"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#karte_mueller -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#karte_mueller">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Kreditkarte"/>
+        <gehörtZuKarteninhaber rdf:resource="http://fhnw.ch/fraud#mueller"/>
+        <hatKartenID>karte_mueller</hatKartenID>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#karte_sutter -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#karte_sutter">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Kreditkarte"/>
+        <gehörtZuKarteninhaber rdf:resource="http://fhnw.ch/fraud#sutter"/>
+        <hatKartenID>karte_sutter</hatKartenID>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#marokko -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#marokko">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Land"/>
+        <gehörtZuRegion rdf:resource="http://fhnw.ch/fraud#region_afrika"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#mueller -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#mueller">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Karteninhaber"/>
+        <ansässigIn rdf:resource="http://fhnw.ch/fraud#deutschland"/>
+        <hatName>Herr Mueller</hatName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#physischer_shop -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#physischer_shop">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Dienstleistungsart"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#region_afrika -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#region_afrika">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Region"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#region_europa -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#region_europa">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Region"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#region_schweiz -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#region_schweiz">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Region"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#schweiz -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#schweiz">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Land"/>
+        <gehörtZuRegion rdf:resource="http://fhnw.ch/fraud#region_schweiz"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#south_african_master_pieces -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#south_african_master_pieces">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Händler"/>
+        <befindlichIn rdf:resource="http://fhnw.ch/fraud#suedafrika"/>
+        <hatDienstleistungsart rdf:resource="http://fhnw.ch/fraud#internet_shop"/>
+        <hatName>South African Master Pieces</hatName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#suedafrika -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#suedafrika">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Land"/>
+        <gehörtZuRegion rdf:resource="http://fhnw.ch/fraud#region_afrika"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#sutter -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#sutter">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Karteninhaber"/>
+        <ansässigIn rdf:resource="http://fhnw.ch/fraud#schweiz"/>
+        <hatName>Herr Sutter</hatName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#transaktion_mueller_internet -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#transaktion_mueller_internet">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <hatHändler rdf:resource="http://fhnw.ch/fraud#south_african_master_pieces"/>
+        <verwendetKreditkarte rdf:resource="http://fhnw.ch/fraud#karte_mueller"/>
+        <hatBetrag rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">102</hatBetrag>
+        <hatZeitstempel rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2000</hatZeitstempel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#transaktion_mueller_marokko -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#transaktion_mueller_marokko">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <hatHändler rdf:resource="http://fhnw.ch/fraud#winds_of_deserts"/>
+        <verwendetKreditkarte rdf:resource="http://fhnw.ch/fraud#karte_mueller"/>
+        <hatBetrag rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</hatBetrag>
+        <hatZeitstempel rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1500</hatZeitstempel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#transaktion_sutter_marokko -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#transaktion_sutter_marokko">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <hatHändler rdf:resource="http://fhnw.ch/fraud#winds_of_deserts"/>
+        <hatVorherigeTransaktion rdf:resource="http://fhnw.ch/fraud#transaktion_sutter_suedafrika"/>
+        <verwendetKreditkarte rdf:resource="http://fhnw.ch/fraud#karte_sutter"/>
+        <hatBetrag rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</hatBetrag>
+        <hatZeitstempel rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1180</hatZeitstempel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#transaktion_sutter_suedafrika -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#transaktion_sutter_suedafrika">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+        <hatHändler rdf:resource="http://fhnw.ch/fraud#world_of_africa"/>
+        <verwendetKreditkarte rdf:resource="http://fhnw.ch/fraud#karte_sutter"/>
+        <hatBetrag rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">11234</hatBetrag>
+        <hatZeitstempel rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</hatZeitstempel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#winds_of_deserts -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#winds_of_deserts">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Händler"/>
+        <befindlichIn rdf:resource="http://fhnw.ch/fraud#marokko"/>
+        <hatDienstleistungsart rdf:resource="http://fhnw.ch/fraud#physischer_shop"/>
+        <hatName>Winds of Deserts</hatName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://fhnw.ch/fraud#world_of_africa -->
+
+    <owl:NamedIndividual rdf:about="http://fhnw.ch/fraud#world_of_africa">
+        <rdf:type rdf:resource="http://fhnw.ch/fraud#Händler"/>
+        <befindlichIn rdf:resource="http://fhnw.ch/fraud#suedafrika"/>
+        <hatDienstleistungsart rdf:resource="http://fhnw.ch/fraud#physischer_shop"/>
+        <hatName>World of Africa</hatName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Rules
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#t">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#karte">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#k">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#l">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#r">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#h">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#b">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#ri">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#rh">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#rb">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#rr">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#s1">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#s2">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#sum">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#t1">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#t2">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#h1">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#l1">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#h2">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#l2">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#z1">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#z2">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#diff">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://fhnw.ch/fraud#absdiff">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 1</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#verwendetKreditkarte"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#karte"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#gehörtZuKarteninhaber"/>
+                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#karte"/>
+                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#k"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#ansässigIn"/>
+                                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#k"/>
+                                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#l"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#gehörtZuRegion"/>
+                                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#l"/>
+                                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#r"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRegionKarteninhaber"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#r"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 9</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatBetrag"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#b"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                        <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#lessThan"/>
+                                        <swrl:arguments>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first rdf:resource="http://fhnw.ch/fraud#b"/>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </swrl:arguments>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoBetrag"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 13</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoInhaber"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#ri"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoHändler"/>
+                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#rh"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoBetrag"/>
+                                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#rb"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoRestriktion"/>
+                                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#rr"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                        <rdf:first>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                                                <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#add"/>
+                                                                <swrl:arguments rdf:parseType="Collection">
+                                                                    <rdf:Description rdf:about="http://fhnw.ch/fraud#s1"/>
+                                                                    <rdf:Description rdf:about="http://fhnw.ch/fraud#ri"/>
+                                                                    <rdf:Description rdf:about="http://fhnw.ch/fraud#rh"/>
+                                                                </swrl:arguments>
+                                                            </rdf:Description>
+                                                        </rdf:first>
+                                                        <rdf:rest>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                <rdf:first>
+                                                                    <rdf:Description>
+                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                                                        <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#add"/>
+                                                                        <swrl:arguments rdf:parseType="Collection">
+                                                                            <rdf:Description rdf:about="http://fhnw.ch/fraud#s2"/>
+                                                                            <rdf:Description rdf:about="http://fhnw.ch/fraud#s1"/>
+                                                                            <rdf:Description rdf:about="http://fhnw.ch/fraud#rb"/>
+                                                                        </swrl:arguments>
+                                                                    </rdf:Description>
+                                                                </rdf:first>
+                                                                <rdf:rest>
+                                                                    <rdf:Description>
+                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                        <rdf:first>
+                                                                            <rdf:Description>
+                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                                                                <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#add"/>
+                                                                                <swrl:arguments rdf:parseType="Collection">
+                                                                                    <rdf:Description rdf:about="http://fhnw.ch/fraud#sum"/>
+                                                                                    <rdf:Description rdf:about="http://fhnw.ch/fraud#s2"/>
+                                                                                    <rdf:Description rdf:about="http://fhnw.ch/fraud#rr"/>
+                                                                                </swrl:arguments>
+                                                                            </rdf:Description>
+                                                                        </rdf:first>
+                                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                                    </rdf:Description>
+                                                                </rdf:rest>
+                                                            </rdf:Description>
+                                                        </rdf:rest>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikowert"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#sum"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 12</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#verwendetKreditkarte"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#karte"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#gehörtZuKarteninhaber"/>
+                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#karte"/>
+                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#k"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#ansässigIn"/>
+                                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#k"/>
+                                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#schweiz"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatHändler"/>
+                                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#h"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                        <rdf:first>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#befindlichIn"/>
+                                                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#h"/>
+                                                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#suedafrika"/>
+                                                            </rdf:Description>
+                                                        </rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoRestriktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 16</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikowert"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#r"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                        <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#greaterThanOrEqual"/>
+                                        <swrl:arguments>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first rdf:resource="http://fhnw.ch/fraud#r"/>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </swrl:arguments>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                                <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#lessThan"/>
+                                                <swrl:arguments>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first rdf:resource="http://fhnw.ch/fraud#r"/>
+                                                        <rdf:rest>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">150</rdf:first>
+                                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                            </rdf:Description>
+                                                        </rdf:rest>
+                                                    </rdf:Description>
+                                                </swrl:arguments>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatEntscheidung"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#entscheidung_gestoppt"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 17</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikowert"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#r"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                        <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#greaterThanOrEqual"/>
+                                        <swrl:arguments>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first rdf:resource="http://fhnw.ch/fraud#r"/>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">150</rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </swrl:arguments>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatEntscheidung"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#entscheidung_abgelehnt"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 15</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikowert"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#r"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                        <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#lessThan"/>
+                                        <swrl:arguments>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first rdf:resource="http://fhnw.ch/fraud#r"/>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </swrl:arguments>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatEntscheidung"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#entscheidung_akzeptiert"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 14</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t1"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatVorherigeTransaktion"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t1"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#t2"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#verwendetKreditkarte"/>
+                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t1"/>
+                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#karte"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#verwendetKreditkarte"/>
+                                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t2"/>
+                                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#karte"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatHändler"/>
+                                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t1"/>
+                                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#h1"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                        <rdf:first>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatDienstleistungsart"/>
+                                                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#h1"/>
+                                                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#physischer_shop"/>
+                                                            </rdf:Description>
+                                                        </rdf:first>
+                                                        <rdf:rest>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                <rdf:first>
+                                                                    <rdf:Description>
+                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#befindlichIn"/>
+                                                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#h1"/>
+                                                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#l1"/>
+                                                                    </rdf:Description>
+                                                                </rdf:first>
+                                                                <rdf:rest>
+                                                                    <rdf:Description>
+                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                        <rdf:first>
+                                                                            <rdf:Description>
+                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatHändler"/>
+                                                                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t2"/>
+                                                                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#h2"/>
+                                                                            </rdf:Description>
+                                                                        </rdf:first>
+                                                                        <rdf:rest>
+                                                                            <rdf:Description>
+                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                <rdf:first>
+                                                                                    <rdf:Description>
+                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatDienstleistungsart"/>
+                                                                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#h2"/>
+                                                                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#physischer_shop"/>
+                                                                                    </rdf:Description>
+                                                                                </rdf:first>
+                                                                                <rdf:rest>
+                                                                                    <rdf:Description>
+                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                        <rdf:first>
+                                                                                            <rdf:Description>
+                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#befindlichIn"/>
+                                                                                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#h2"/>
+                                                                                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#l2"/>
+                                                                                            </rdf:Description>
+                                                                                        </rdf:first>
+                                                                                        <rdf:rest>
+                                                                                            <rdf:Description>
+                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                                <rdf:first>
+                                                                                                    <rdf:Description>
+                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom"/>
+                                                                                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#l1"/>
+                                                                                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#l2"/>
+                                                                                                    </rdf:Description>
+                                                                                                </rdf:first>
+                                                                                                <rdf:rest>
+                                                                                                    <rdf:Description>
+                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                                        <rdf:first>
+                                                                                                            <rdf:Description>
+                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                                                                                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatZeitstempel"/>
+                                                                                                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t1"/>
+                                                                                                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#z1"/>
+                                                                                                            </rdf:Description>
+                                                                                                        </rdf:first>
+                                                                                                        <rdf:rest>
+                                                                                                            <rdf:Description>
+                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                                                <rdf:first>
+                                                                                                                    <rdf:Description>
+                                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                                                                                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatZeitstempel"/>
+                                                                                                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t2"/>
+                                                                                                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#z2"/>
+                                                                                                                    </rdf:Description>
+                                                                                                                </rdf:first>
+                                                                                                                <rdf:rest>
+                                                                                                                    <rdf:Description>
+                                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                                                        <rdf:first>
+                                                                                                                            <rdf:Description>
+                                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                                                                                                                <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#subtract"/>
+                                                                                                                                <swrl:arguments rdf:parseType="Collection">
+                                                                                                                                    <rdf:Description rdf:about="http://fhnw.ch/fraud#diff"/>
+                                                                                                                                    <rdf:Description rdf:about="http://fhnw.ch/fraud#z1"/>
+                                                                                                                                    <rdf:Description rdf:about="http://fhnw.ch/fraud#z2"/>
+                                                                                                                                </swrl:arguments>
+                                                                                                                            </rdf:Description>
+                                                                                                                        </rdf:first>
+                                                                                                                        <rdf:rest>
+                                                                                                                            <rdf:Description>
+                                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                                                                <rdf:first>
+                                                                                                                                    <rdf:Description>
+                                                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                                                                                                                        <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#abs"/>
+                                                                                                                                        <swrl:arguments rdf:parseType="Collection">
+                                                                                                                                            <rdf:Description rdf:about="http://fhnw.ch/fraud#absdiff"/>
+                                                                                                                                            <rdf:Description rdf:about="http://fhnw.ch/fraud#diff"/>
+                                                                                                                                        </swrl:arguments>
+                                                                                                                                    </rdf:Description>
+                                                                                                                                </rdf:first>
+                                                                                                                                <rdf:rest>
+                                                                                                                                    <rdf:Description>
+                                                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                                                                        <rdf:first>
+                                                                                                                                            <rdf:Description>
+                                                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                                                                                                                                <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#lessThanOrEqual"/>
+                                                                                                                                                <swrl:arguments>
+                                                                                                                                                    <rdf:Description>
+                                                                                                                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                                                                                                                        <rdf:first rdf:resource="http://fhnw.ch/fraud#absdiff"/>
+                                                                                                                                                        <rdf:rest>
+                                                                                                                                                            <rdf:Description>
+                                                                                                                                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                                                                                                                                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">300</rdf:first>
+                                                                                                                                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                                                                                                                            </rdf:Description>
+                                                                                                                                                        </rdf:rest>
+                                                                                                                                                    </rdf:Description>
+                                                                                                                                                </swrl:arguments>
+                                                                                                                                            </rdf:Description>
+                                                                                                                                        </rdf:first>
+                                                                                                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                                                                                                    </rdf:Description>
+                                                                                                                                </rdf:rest>
+                                                                                                                            </rdf:Description>
+                                                                                                                        </rdf:rest>
+                                                                                                                    </rdf:Description>
+                                                                                                                </rdf:rest>
+                                                                                                            </rdf:Description>
+                                                                                                        </rdf:rest>
+                                                                                                    </rdf:Description>
+                                                                                                </rdf:rest>
+                                                                                            </rdf:Description>
+                                                                                        </rdf:rest>
+                                                                                    </rdf:Description>
+                                                                                </rdf:rest>
+                                                                            </rdf:Description>
+                                                                        </rdf:rest>
+                                                                    </rdf:Description>
+                                                                </rdf:rest>
+                                                            </rdf:Description>
+                                                        </rdf:rest>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikowert"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t1"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">150</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 2</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatHändler"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#h"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#befindlichIn"/>
+                                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#h"/>
+                                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#l"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#gehörtZuRegion"/>
+                                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#l"/>
+                                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#r"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRegionHändler"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#r"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 8</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRegionHändler"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#region_afrika"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoHändler"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 7</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRegionHändler"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#region_europa"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoHändler"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 6</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRegionHändler"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#region_schweiz"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoHändler"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 5</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRegionKarteninhaber"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#region_afrika"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoInhaber"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 4</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRegionKarteninhaber"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#region_europa"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoInhaber"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 3</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRegionKarteninhaber"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#region_schweiz"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoInhaber"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 10</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatBetrag"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#b"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                        <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#greaterThanOrEqual"/>
+                                        <swrl:arguments>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first rdf:resource="http://fhnw.ch/fraud#b"/>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </swrl:arguments>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                                <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#lessThan"/>
+                                                <swrl:arguments>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first rdf:resource="http://fhnw.ch/fraud#b"/>
+                                                        <rdf:rest>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10000</rdf:first>
+                                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                            </rdf:Description>
+                                                        </rdf:rest>
+                                                    </rdf:Description>
+                                                </swrl:arguments>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoBetrag"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Regel 11</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://fhnw.ch/fraud#Transaktion"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatBetrag"/>
+                                <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                                <swrl:argument2 rdf:resource="http://fhnw.ch/fraud#b"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#BuiltinAtom"/>
+                                        <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#greaterThanOrEqual"/>
+                                        <swrl:arguments>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first rdf:resource="http://fhnw.ch/fraud#b"/>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10000</rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </swrl:arguments>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://fhnw.ch/fraud#hatRisikoBetrag"/>
+                        <swrl:argument1 rdf:resource="http://fhnw.ch/fraud#t"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">90</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+</rdf:RDF>
